@@ -1098,8 +1098,11 @@ DEFUN (no_router_bgp,
 	} else {
 		as = strtoul(argv[idx_asn]->arg, NULL, 10);
 
-		if (argc > 4)
+		if (argc > 4) {
 			name = argv[idx_vrf]->arg;
+			if (strmatch(name, VRF_DEFAULT_NAME))
+				name = NULL;
+		}
 
 		/* Lookup bgp structure. */
 		bgp = bgp_lookup(as, name);
